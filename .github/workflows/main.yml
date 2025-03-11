@@ -4,24 +4,32 @@ on:
   workflow_dispatch:  # 수동으로 실행할 수 있는 옵션
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+  pull-and-push:
+    runs-on: latest
+
     steps:
-      - name: 소스 레지스트리에서 MySQL 이미지 가져오기
+      - name: source kr2 public
+        uses: docker/login-action@v1
+        with:
+          registry: cloudtech-main.kr-central-2.kcr.dev # source
+          username: 6af26e4c6f5945dd88c39193295d1af3
+          password: vUEGdWRCUGH46pzLZHmK2BvTp8UXzAKBypq_q-abaxUBWtl50vtOsA1nbaPNUknWk3ikfDDl1ob8Jn08VrY2gg
+
+      - name: source image pull
         run: |
-          docker pull mysql # MySQL 이미지 가져오기
+          docker pull cloudtech-main.kr-central-2.kcr.dev/justin/mysql:latest # MySQL 이미지 가져오기
 
       - name: 대상 컨테이너 레지스트리 로그인
         uses: docker/login-action@v1
         with:
-          registry: dev-hrs.kr-gov-central-1.kcr.dev # 대상 레지스트리 URL
-          username: 17ea015ad10c4d0188768f0dd198e5a4 # GitHub Secrets에 저장된 대상 레지스트리 사용자 이름
-          password: 70feb7215e241d60aae17713e1a5a065a7a43878c6815b7b969b3fbe19a081d4c3fea1 # GitHub Secrets에 저장된 대상 레지스트리 비밀번호
+          registry: cloudtech.kr-gov-central-1.kcr.dev # target 레지스트리 URL
+          username: 88f5461cde684eaab195b6b8883c55b3 
+          password: ff5536873822e2d150bf3aa94b889dc2bc0e5a7d3664df47f001097dba510c6d340521 
 
       - name: 대상 레지스트리용 이미지 태그 변경
         run: |
-          docker tag mysql dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/mysql:latest # 이미지 태그 변경
+          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/mysql:latest cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql:latest # 이미지 태그 변경
 
       - name: 대상 레지스트리에 Docker 이미지 푸시
         run: |
-          docker push dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/mysql:latest # 대상 레지스트리에 이미지 푸시
+          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql # 대상 레지스트리에 이미지 푸시
