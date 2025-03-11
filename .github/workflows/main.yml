@@ -1,4 +1,4 @@
-name: Push to KCR
+name: pull-and-push
 
 on:
   workflow_dispatch:  # 수동으로 실행할 수 있는 옵션
