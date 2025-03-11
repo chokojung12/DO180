@@ -32,4 +32,4 @@ jobs:
 
       - name: 대상 레지스트리에 Docker 이미지 푸시
         run: |
-          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql # 대상 레지스트리에 이미지 푸시
+          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql:latest # 대상 레지스트리에 이미지 푸시
