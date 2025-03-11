@@ -7,28 +7,21 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Log in to Source Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: source-registry-url # 소스 레지스트리 URL
-          username: ${{ secrets.SOURCE_REGISTRY_USERNAME }} # 소스 레지스트리 사용자 이름
-          password: ${{ secrets.SOURCE_REGISTRY_PASSWORD }} # 소스 레지스트리 비밀번호
-
-      - name: Pull image from Source Registry
+      - name: 소스 레지스트리에서 MySQL 이미지 가져오기
         run: |
-          docker pull source-registry-url/path/to/image:tag # 소스 레지스트리에서 이미지 가져오기
+          docker pull mysql # MySQL 이미지 가져오기
 
-      - name: Log in to Destination Container Registry
+      - name: 대상 컨테이너 레지스트리 로그인
         uses: docker/login-action@v1
         with:
           registry: dev-hrs.kr-gov-central-1.kcr.dev # 대상 레지스트리 URL
-          username: ${{ secrets.KCR_USERNAME }} # GitHub Secrets에 저장된 대상 레지스트리 사용자 이름
-          password: ${{ secrets.KCR_PASSWORD }} # GitHub Secrets에 저장된 대상 레지스트리 비밀번호
+          username: 17ea015ad10c4d0188768f0dd198e5a4 # GitHub Secrets에 저장된 대상 레지스트리 사용자 이름
+          password: 70feb7215e241d60aae17713e1a5a065a7a43878c6815b7b969b3fbe19a081d4c3fea1 # GitHub Secrets에 저장된 대상 레지스트리 비밀번호
 
-      - name: Tag the image for Destination Registry
+      - name: 대상 레지스트리용 이미지 태그 변경
         run: |
-          docker tag source-registry-url/path/to/image:tag dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/clue-client:develop # 이미지 태그 변경
+          docker tag mysql dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/mysql:latest # 이미지 태그 변경
 
-      - name: Push Docker image to Destination Registry
+      - name: 대상 레지스트리에 Docker 이미지 푸시
         run: |
-          docker push dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/clue-client:develop # 대상 레지스트리에 이미지 푸시
+          docker push dev-hrs.kr-gov-central-1.kcr.dev/dev-hrs-app/mysql:latest # 대상 레지스트리에 이미지 푸시
