@@ -32,8 +32,8 @@ jobs:
 
       - name: 대상 레지스트리용 이미지 태그 변경
         run: |
-          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 이미지 태그 변경
+          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop public.ecr.aws/q8f1p9x5/justin.kook/clue-client:develop # 이미지 태그 변경
 
       - name: 대상 레지스트리에 Docker 이미지 푸시
         run: |
-          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 대상 레지스트리에 이미지 푸시
+          docker push public.ecr.aws/q8f1p9x5/justin.kook/clue-client:develop # 대상 레지스트리에 이미지 푸시
