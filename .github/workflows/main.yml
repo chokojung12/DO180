@@ -17,7 +17,7 @@ jobs:
 
       - name: source image pull
         run: |
-          docker pull cloudtech-main.kr-central-2.kcr.dev/justin/mysql:latest # MySQL 이미지 가져오기
+          docker pull cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop # clue-client 이미지 가져오기
 
       - name: 대상 컨테이너 레지스트리 로그인
         uses: docker/login-action@v1
@@ -28,8 +28,8 @@ jobs:
 
       - name: 대상 레지스트리용 이미지 태그 변경
         run: |
-          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/mysql:latest cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql:latest # 이미지 태그 변경
+          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 이미지 태그 변경
 
       - name: 대상 레지스트리에 Docker 이미지 푸시
         run: |
-          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/mysql:latest # 대상 레지스트리에 이미지 푸시
+          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 대상 레지스트리에 이미지 푸시
