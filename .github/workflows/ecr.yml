@@ -12,8 +12,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: cloudtech-main.kr-central-2.kcr.dev # source
-          username: 6af26e4c6f5945dd88c39193295d1af3
-          password: vUEGdWRCUGH46pzLZHmK2BvTp8UXzAKBypq_q-abaxUBWtl50vtOsA1nbaPNUknWk3ikfDDl1ob8Jn08VrY2gg
+          username: "${{ secrets.KR2_ACCESS_KEY_ID }}"
+          password: "${{ secrets.KR2_SECRET_ACCESS_KEY }}"
 
       - name: source image pull
         run: |
