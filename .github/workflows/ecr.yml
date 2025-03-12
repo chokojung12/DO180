@@ -18,13 +18,17 @@ jobs:
       - name: source image pull
         run: |
           docker pull cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop # clue-client 이미지 가져오기
+          
+      - name: Configure AWS credentials
+        run: |
+          echo "${{ secrets.AWS_ACCESS_KEY_ID }}" | aws configure set aws_access_key_id --profile default
+          echo "${{ secrets.AWS_SECRET_ACCESS_KEY }}" | aws configure set aws_secret_access_key --profile default
+          echo "us-east-1" | aws configure set region --profile default  # 필요한 리전으로 변경
 
-      - name: 대상 컨테이너 레지스트리 로그인
-        uses: docker/login-action@v1
-        with:
-          registry: cloudtech.kr-gov-central-1.kcr.dev # target 레지스트리 URL
-          username: 88f5461cde684eaab195b6b8883c55b3 
-          password: ff5536873822e2d150bf3aa94b889dc2bc0e5a7d3664df47f001097dba510c6d340521 
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
 
       - name: 대상 레지스트리용 이미지 태그 변경
         run: |
