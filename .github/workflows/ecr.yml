@@ -1,0 +1,35 @@
+name: pull-and-push
+
+on:
+  workflow_dispatch:  # 수동으로 실행할 수 있는 옵션
+
+jobs:
+  pull-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: source kr2 public
+        uses: docker/login-action@v1
+        with:
+          registry: cloudtech-main.kr-central-2.kcr.dev # source
+          username: 6af26e4c6f5945dd88c39193295d1af3
+          password: vUEGdWRCUGH46pzLZHmK2BvTp8UXzAKBypq_q-abaxUBWtl50vtOsA1nbaPNUknWk3ikfDDl1ob8Jn08VrY2gg
+
+      - name: source image pull
+        run: |
+          docker pull cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop # clue-client 이미지 가져오기
+
+      - name: 대상 컨테이너 레지스트리 로그인
+        uses: docker/login-action@v1
+        with:
+          registry: cloudtech.kr-gov-central-1.kcr.dev # target 레지스트리 URL
+          username: 88f5461cde684eaab195b6b8883c55b3 
+          password: ff5536873822e2d150bf3aa94b889dc2bc0e5a7d3664df47f001097dba510c6d340521 
+
+      - name: 대상 레지스트리용 이미지 태그 변경
+        run: |
+          docker tag cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 이미지 태그 변경
+
+      - name: 대상 레지스트리에 Docker 이미지 푸시
+        run: |
+          docker push cloudtech.kr-gov-central-1.kcr.dev/cloudtech-gov/clue-client:develop # 대상 레지스트리에 이미지 푸시
