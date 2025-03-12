@@ -18,6 +18,11 @@ jobs:
       - name: source image pull
         run: |
           docker pull cloudtech-main.kr-central-2.kcr.dev/justin/clue-client:develop # clue-client 이미지 가져오기
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
           
       - name: Configure AWS credentials
         run: |
