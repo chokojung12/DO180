@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # 수동으로 실행할 수 있는 옵션
 
 jobs:
-  pull-and-push:
+  chech-az:
     runs-on: ubuntu-latest
 
       - name: Print runner VM region
