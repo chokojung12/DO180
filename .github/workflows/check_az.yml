@@ -7,6 +7,7 @@ jobs:
   chech-az:
     runs-on: ubuntu-latest
 
+    steps:
       - name: Print runner VM region
       # https://learn.microsoft.com/en-us/azure/virtual-machines/instance-metadata-service?tabs=linux
       # leaf nodes require the format=text query parameter
