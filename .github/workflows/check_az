@@ -1,0 +1,13 @@
+ name: install aws-cli
+
+on:
+  workflow_dispatch:  # 수동으로 실행할 수 있는 옵션
+
+jobs:
+  pull-and-push:
+    runs-on: ubuntu-latest
+
+      - name: Print runner VM region
+      # https://learn.microsoft.com/en-us/azure/virtual-machines/instance-metadata-service?tabs=linux
+      # leaf nodes require the format=text query parameter
+        run: curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance/compute/location?api-version=2023-07-01&format=text"
